@@ -1,0 +1,85 @@
+{% extends "base.twig.html" %}
+{% block main %}
+<div class="page-taches">
+    <form method="post" action="contact/trouver" autocomplete="off">
+        <input autofocus type="text" name="ctc_search" placeholder="Nom, prénom, ou téléphone...">
+    </form>
+    
+
+    {% if nouveau or modifier %}
+        <form method="post" action="contact/{{ modifier ? 'modifier' : 'ajouter' }}/{{modifier ? modifier_contact_id : '' }}" autocomplete="off">
+            <fieldset>
+                <legend>Information du contact</legend>
+                <label>
+                    Prénom {{ contact.ctc_prenom }}
+                    <input value="{{ctc_prenom?:contact.ctc_prenom}}" autofocus type="text" name="ctc_prenom" placeholder="Prénom" required pattern="[A-Za-z\-., ]{1,100}">
+                </label>
+                <label>
+                    Nom
+                    <input value="{{ctc_nom?:contact.ctc_nom}}" type="text" name="ctc_nom" placeholder="Nom" required pattern="[A-Za-z\-., ]{1,100}">
+                </label>
+            </fieldset>
+
+            {% for i in range(0, telsIdx) %}
+            <fieldset class="tel__">
+                <label>
+                    Numéro
+                    <input value="{{tel_numero[i]?:contact.tels[i].tel_numero}}" type="tel" name="tel_numero[]" placeholder="Numéro de téléphonr" required pattern="[0-9\-+ ]{10,15}" class="tel_numero">
+                </label>
+                <label>
+                    Poste
+                    <input value="{{tel_poste[i]?:contact.tels[i].tel_poste}}"  type="text" name="tel_poste[]" placeholder="Poste" required pattern="[0-9]{4}" class="tel_poste">
+                </label>
+                <label>
+                    Type
+                    {% set telType = tel_poste[i]?:contact.tels[i].tel_type %}
+                    <select name="tel_type[]" required class="tel_type">
+                        <option value="" disabled {{ telType ? '' : 'selected' }}>Choisissez</option>
+                        <option value="Cellulaire" {{ (telType != 'Cellulaire')?: 'selected' }}>Cellulaire</option>
+                        <option value="Domicile" {{ (telType != 'Domicile')?: 'selected' }}>Domicile</option>
+                        <option value="Bureau" {{ (telType != 'Bureau')?: 'selected' }}>Bureau</option>
+                        <option value="Autre" {{ (telType != 'Autre')?: 'selected' }}>Autre</option>
+                    </select>
+                </label>
+            </fieldset>
+
+            {% endfor %}
+ 
+            <label class="label_addtel label_addtel__">ajouter un numéro</label>
+            <fieldset>
+                <a href="contact/tout">Annuler</a>
+                <input type="submit" value="Créer">
+            </fieldset>
+
+            </form>
+            {% else %}
+            <div>
+                <a href="contact/tout/nouveau">Ajouter contact</a>
+            </div>
+            {% endif %}
+
+    <article class="contact-list">
+
+        {% for ctc_id,contact in contacts %}
+            <section>
+                <div>
+                <a href="contact/tout/modifier/{{ctc_id}}">mod</a>
+                <a href="contact/supprimer/{{ctc_id}}">supp</a>
+                {{ contact.ctc_prenom }} {{ contact.ctc_nom }}
+                </div>
+                <table>
+                    {% for tel in contact.tels %}
+                        <tr>
+                            <td>{{ tel.tel_type }}</td>
+                            <td>{{ tel.tel_numero }}</td>
+                            <td>{{ tel.tel_poste }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </section>
+        {% endfor %}
+
+    </article>
+
+</div>
+{% endblock %}
