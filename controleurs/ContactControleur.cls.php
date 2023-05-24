@@ -28,7 +28,7 @@ class ContactControleur extends Controleur
     function __construct($modele, $module, $action, $params)
     {
         if(!isset($_SESSION['utilisateur'])) {
-            Utilitaire::nouvelleRoute('utilisateur/index');
+            Utilitaire::nouvelleRoute('/utilisateur/index');
         }
         
         parent::__construct($modele, $module, $action, $params);
@@ -123,7 +123,7 @@ class ContactControleur extends Controleur
 
         if($this->donneesValide()){
             $res = $this->modele->ajouter($_POST['ctc_prenom'], $_POST['ctc_nom'], $_POST['tel_numero'], $_POST['tel_poste'], $_POST['tel_type']);
-            Utilitaire::nouvelleRoute('contact/tout');
+            Utilitaire::nouvelleRoute('/contact/tout');
         }
     }
 
@@ -134,7 +134,7 @@ class ContactControleur extends Controleur
 
         if($this->donneesValide()){
             $res = $this->modele->update(array_key_last($this->params), $_POST['ctc_prenom'], $_POST['ctc_nom'], $_POST['tel_numero'], $_POST['tel_poste'], $_POST['tel_type']);
-            Utilitaire::nouvelleRoute('contact/tout');
+            Utilitaire::nouvelleRoute('/contact/tout');
         }
     }
 
@@ -144,7 +144,7 @@ class ContactControleur extends Controleur
     public function supprimer() {
 
             $res = $this->modele->delete(array_key_last($this->params));
-            Utilitaire::nouvelleRoute('contact/tout');
+            Utilitaire::nouvelleRoute('/contact/tout');
 
     }
 

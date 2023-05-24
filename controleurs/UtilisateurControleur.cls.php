@@ -27,7 +27,7 @@ class UtilisateurControleur extends Controleur
     {
         // Si l'utilisateur est connecté on le dirige directement dans la page 'catégories'
         if(isset($_SESSION['utilisateur'])) {
-            Utilitaire::nouvelleRoute('contact/tout');
+            Utilitaire::nouvelleRoute('/contact/tout');
         }
         
         parent::__construct($modele, $module, $action, $params);
@@ -72,7 +72,7 @@ class UtilisateurControleur extends Controleur
             // Sauvegarder l'état de connexion
             $_SESSION['utilisateur'] = $utilisateur;
             // Rediriger vers categorie/tout
-            Utilitaire::nouvelleRoute('contact/tout');
+            Utilitaire::nouvelleRoute('/contact/tout');
         }
         else {
             $this->gabarit->affecter('erreur', $erreur);
@@ -87,7 +87,7 @@ class UtilisateurControleur extends Controleur
     public function deconnexion()
     {
         unset($_SESSION['utilisateur']);
-        Utilitaire::nouvelleRoute('utilisateur/index/msg=_1010');
+        Utilitaire::nouvelleRoute('/utilisateur/index/msg=_1010');
     }
 
     /**
@@ -140,7 +140,7 @@ class UtilisateurControleur extends Controleur
                 $this->nouveau();
             }
             else {
-                Utilitaire::nouvelleRoute('utilisateur/index/msg=_2030');
+                Utilitaire::nouvelleRoute('/utilisateur/index/msg=_2030');
             }
         }
     }
