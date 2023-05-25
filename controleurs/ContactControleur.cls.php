@@ -59,11 +59,7 @@ class ContactControleur extends Controleur
         $this->gabarit->affecter('modifier_contact_id', array_key_last($this->params??[]));
 
         $contact = $contacts[array_key_last($this->params??[])]??[];
-        $telsIdx = count($contact['tels']??[])>0 ?  count($contact['tels']??[])-1 : 1;
         $this->gabarit->affecter('contact', $contact);
-        $this->gabarit->affecter('telsIdx', $telsIdx);
-
-
     }
 
     /**

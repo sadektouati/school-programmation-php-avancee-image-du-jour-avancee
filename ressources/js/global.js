@@ -1,10 +1,15 @@
-document.querySelector('.label_addtel__')?.addEventListener('click', ()=>{
-    let element = document.querySelector('.tel__').cloneNode(true);
+document.addEventListener("click", function(e){
+    const target = e.target.closest(".label_addtel__");
+  
+    if(target){
+        let element = target.closest('.tel__').cloneNode(true);
 
-    element.querySelector('.tel_numero').value = '';
-    element.querySelector('.tel_poste').value = '';
-    element.querySelector('.tel_type').value = '';
+        element.querySelector('.tel_numero').value = '';
+        element.querySelector('.tel_poste').value = '';
+        element.querySelector('.tel_type').value = '';
 
-    document.querySelector('.label_addtel__').insertAdjacentElement('beforebegin', element);
-
-})
+        target.remove();
+    
+        document.querySelector('.tel__:last-of-type').insertAdjacentElement('afterend', element);
+    }
+  });

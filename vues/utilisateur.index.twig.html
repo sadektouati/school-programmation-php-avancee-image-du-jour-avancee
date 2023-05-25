@@ -5,21 +5,23 @@
     {% if erreur != '' %}
     <div class="msg-erreur">{{erreur}}</div>
     {% endif %}
-    <div class="page-utilisateur">
-        <form class="connexion" method="post" action="/utilisateur/connexion">
+        <form class="page-utilisateur " method="post" action="/utilisateur/connexion">
             <fieldset>
                 <legend>Ouvrir une connexion</legend>
                 <label>
                     Courriel
-                    <input autofocus type="email" name="uti_courriel" placeholder="Adresse courriel" required>
+                    <input autofocus type="email" name="uti_courriel" required>
                 </label>
                 <label>
                     Mot de passe
                     <input type="password" name="uti_mdp" required pattern="\w{8,}">
                 </label>
-                <input type="submit" value="Connexion">
+                <button>connexion</button>
             </fieldset>
-            <a href="/utilisateur/nouveau"><div class="basculer-formulaire">Créer un compte</div></a>
+            <div class="basculer-formulaire">
+                <a href="/utilisateur/nouveau">
+                    Créer un compte
+                </a>
+            </div>
         </form>
-    </div>
 {% endblock %}

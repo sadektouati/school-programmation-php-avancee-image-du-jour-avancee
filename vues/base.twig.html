@@ -6,8 +6,8 @@
     <link rel="preconnect" href="/https://fonts.googleapis.com">
     <link rel="preconnect" href="/https://fonts.gstatic.com" crossorigin>
     <link href="/https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;900&family=Roboto:wght@400;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/ressources/css/styles.css">
-    <script src="/ressources/js/global.js" defer></script>
+    <link rel="stylesheet" href="/ressources/css/styles.css?{{ random() }}">
+    <script src="/ressources/js/global.js?{{ random() }}" defer></script>
     <link rel="icon" type="image/ico" href="/ressources/images/favicon.ico" />
     {% block titrePage %}
         <title>Nestor | Liste de contact</title>
@@ -15,19 +15,17 @@
 </head>
 
 <body>
-    <div class="conteneur">
         {% if session.utilisateur %}
-        <div class="barre-utilisateur">
+        <header class="barre-utilisateur">
             <span class="nom-utilisateur">{{session.utilisateur.uti_courriel}}</span>
-            <span class="btn-logout"><a href="/utilisateur/deconnexion">Déconnexion</a></span>
-        </div>
+            <a href="/utilisateur/deconnexion" class="btn-logout">déconnexion</a>
+        </header>
         {% endif %}
         <a href="/utilisateur/index" class="logo">
-            <img src="/ressources/images/memo-logo.png" alt="Nestor">
+            <img src="/ressources/images/memo-logo.png?{{ random() }}" alt="Nestor">
         </a>
 
         {% block main %}{% endblock %}
 
-    </div>
 </body>
 </html>

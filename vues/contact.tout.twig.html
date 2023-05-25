@@ -1,8 +1,13 @@
 {% extends "base.twig.html" %}
 {% block main %}
+
 <div class="page-taches">
+    
     <form method="post" action="/contact/trouver" autocomplete="off">
-        <input autofocus type="text" name="ctc_search" placeholder="Nom, prénom, ou téléphone...">
+        <fieldset>
+            <label for="ctc_search">rechercher: nom, prénom, ou téléphone...</label>
+            <input autofocus type="text" name="ctc_search" id="ctc_search">
+        </fieldset>
     </form>
     
 
@@ -11,49 +16,51 @@
             <fieldset>
                 <legend>Information du contact</legend>
                 <label>
-                    Prénom {{ contact.ctc_prenom }}
-                    <input value="{{ctc_prenom?:contact.ctc_prenom}}" autofocus type="text" name="ctc_prenom" placeholder="Prénom" required pattern="[A-Za-z\-., ]{1,100}">
+                    Prénom
+                    <input value="{{ctc_prenom?:contact.ctc_prenom}}" autofocus type="text" name="ctc_prenom" required pattern="[A-Za-z\-., ]{1,100}">
                 </label>
                 <label>
                     Nom
-                    <input value="{{ctc_nom?:contact.ctc_nom}}" type="text" name="ctc_nom" placeholder="Nom" required pattern="[A-Za-z\-., ]{1,100}">
+                    <input value="{{ctc_nom?:contact.ctc_nom}}" type="text" name="ctc_nom" required pattern="[A-Za-z\-., ]{1,100}">
                 </label>
             </fieldset>
 
-            {% for i in range(0, telsIdx) %}
             <fieldset class="tel__">
+
                 <label>
-                    Numéro
-                    <input value="{{tel_numero[i]?:contact.tels[i].tel_numero}}" type="tel" name="tel_numero[]" placeholder="Numéro de téléphonr" required pattern="[0-9\-+ ]{10,15}" class="tel_numero">
+                    Numéro de téléphone
+                    <input value="{{tel_numero[i]?:contact.tels[i].tel_numero}}" type="tel" name="tel_numero[]" required pattern="[0-9\-+ ]{10,15}" class="tel_numero">
                 </label>
+
                 <label>
                     Poste
-                    <input value="{{tel_poste[i]?:contact.tels[i].tel_poste}}"  type="text" name="tel_poste[]" placeholder="Poste" required pattern="[0-9]{4}" class="tel_poste">
+                    <input value="{{tel_poste[i]?:contact.tels[i].tel_poste}}"  type="text" name="tel_poste[]" required pattern="[0-9]{4}" class="tel_poste">
                 </label>
+
                 <label>
                     Type
                     {% set telType = tel_poste[i]?:contact.tels[i].tel_type %}
                     <select name="tel_type[]" required class="tel_type">
-                        <option value="" disabled {{ telType ? '' : 'selected' }}>Choisissez</option>
-                        <option value="Cellulaire" {{ (telType != 'Cellulaire')?: 'selected' }}>Cellulaire</option>
-                        <option value="Domicile" {{ (telType != 'Domicile')?: 'selected' }}>Domicile</option>
-                        <option value="Bureau" {{ (telType != 'Bureau')?: 'selected' }}>Bureau</option>
-                        <option value="Autre" {{ (telType != 'Autre')?: 'selected' }}>Autre</option>
+                        <option value="" disabled {{ telType ? '' : 'selected' }}></option>
+                        <option value="Cellulaire" {{ (telType != 'Cellulaire') ? '' : 'selected' }}>Cellulaire</option>
+                        <option value="Domicile" {{ (telType != 'Domicile')? '' : 'selected' }}>Domicile</option>
+                        <option value="Bureau" {{ (telType != 'Bureau')? '' : 'selected' }}>Bureau</option>
+                        <option value="Autre" {{ (telType != 'Autre')? '' : 'selected' }}>Autre</option>
                     </select>
                 </label>
-            </fieldset>
 
-            {% endfor %}
- 
-            <label class="label_addtel label_addtel__">ajouter un numéro</label>
-            <fieldset>
-                <a href="/contact/tout">Annuler</a>
-                <input type="submit" value="Créer">
+                <label class="label_addtel label_addtel__">ajouter un numéro</label>
+
             </fieldset>
+            
+            <div>
+                <a href="/contact/tout">annuler</a>
+                <button>créer</button>
+            </div>
 
             </form>
             {% else %}
-            <div>
+            <div class="nouveau-contact">
                 <a href="/contact/tout/nouveau">Ajouter contact</a>
             </div>
             {% endif %}
@@ -62,11 +69,15 @@
 
         {% for ctc_id,contact in contacts %}
             <section>
+                <header>
                 <div>
-                <a href="/contact/tout/modifier/{{ctc_id}}">mod</a>
-                <a href="/contact/supprimer/{{ctc_id}}">supp</a>
-                {{ contact.ctc_prenom }} {{ contact.ctc_nom }}
+                    {{ contact.ctc_prenom }} {{ contact.ctc_nom }}
                 </div>
+                <div>
+                    <a href="/contact/tout/modifier/{{ctc_id}}">modifier</a>
+                    <a href="/contact/supprimer/{{ctc_id}}">supprimer</a>
+                </div>
+                </header>
                 <table>
                     {% for tel in contact.tels %}
                         <tr>
